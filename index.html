@@ -1,12 +1,42 @@
-<!DOCTYPE html>
-<html>
+<html ng-app='app'>
 
 <head>
+    <meta charset="utf-8">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body {
+            font-size: 1.3em;
+        }
+    </style>
     <title>AngularJs App</title>
 </head>
 
 <body>
-    <h1>Welcome in AngularJs App</h1>
+    <h1>Name Calculator</h1>
+    <div ng-controller='AppController'>
+        <div>
+            Your Name: <input type="text" ng-model="name" ng-blur="upper();">
+        </div>
+        Total Number value of person's name is: {{totalValue}}
+
+        <div>
+            <button ng-click="feedMe()">Feed Me</button>
+            <!-- ng-src -- means tell the intreprot not try to invoke the src of the image -->
+            <br>
+            <img ng-src="images/img_{{stateOfBeing}}.png" />
+        </div>
+
+    </div>
+
+
+    <!--ng-keyUp="dispalyNumeric(name);"-->
+
+    <!--<div ng-controller='AppController'>
+        {{sayHello()}}
+        <input type="text" ng-model="name" />
+        Inside the input is: {{name}}
+    </div>-->
 </body>
 
 </html>
