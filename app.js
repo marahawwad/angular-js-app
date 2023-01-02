@@ -14,13 +14,19 @@
         // also we can create function and pass it to the controller it will act as the same
         // to make the code worked even after the minifcation we use either put the function in controller in array with passes parameters or using the $inject
         // .controller --> to register the created conroller
+        // init the $scope, share code
         .controller('AppController', /*['$scope', '$filter', controller name] */ContFunction)
         // to create custom filer 1. defined the custom filter factory 
         // 2. register filter factory with module
         //3. inject it with nameFilter
         .filter('custom', CustomFilter)
         // once we need too using it from html we don't need to inject it in controller injector
-        .filter('truth', TruthFilter);
+        .filter('truth', TruthFilter)
+        // here we used to right the busniess logic
+        // it follow Singelton design  
+        // inject it with the same name of declaration
+        // service(name, function (treat as function constractor))
+        .service();
 
     ContFunction.$inject = ['$scope', '$filter', 'customFilter', '$timeout'];
 
@@ -153,8 +159,9 @@
          */
 
         /**
-         * prototyple inheritance --> Object.create(parent); using to inhiernt value from the parent
+         * prototyple inheritance --> Object.create(parent); using to inhiernt value from the parent ($scope)
          * scope inheritance --> the scope inherint from the up scope level 
+         * controller as syntax --> Conrtoller as ctrl1 create prop 'ctrl' in $scope 
          */
 
         // function Dog(){} --> this indicate a constructor function
