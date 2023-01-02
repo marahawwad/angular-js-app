@@ -13,22 +13,48 @@
 </head>
 
 <body>
-    <h1>Name Calculator</h1>
+    <h1>App</h1>
     <div ng-controller='AppController'>
+
         <div>
+            <button ng-click="upCounter()"> Increment Counter</button>
+        </div>
+
+        <div>
+
+            Reqular Counter: {{counter}}
+        </div>
+        <!-- Once Counter: {{onceCounter}} <br>
+                        <button ng-click="countOnce()"> Up Once Counter (once)</button>
+
+            <div>
+                    <button ng-click="showNumberOfWatchers()"> Log # of Watchers</button>
+
             Your Name: <input type="text" ng-model="name" ng-blur="upper();">
         </div>
         Total Number value of person's name is: {{totalValue}}
+        <br>
+        Originl: {{sayMessage()}}
+        <br>
+        Replace : {{replaceMessage()}}
+        <br>
+        Truth: {{sayMessage() | truth : 'healthy': 'cookie'}}
+        <br>
+        Big Truth : {{sayMessage() | truth : 'healthy': 'cookie' | uppercase}}-->
 
         <div>
-            <button ng-click="feedMe()">Feed Me</button>
             <!-- ng-src -- means tell the intreprot not try to invoke the src of the image -->
+            <!--  <button ng-click="feedMe()">Feed Me</button>
+            Cost: {{foodCost | currency }}
             <br>
-            <img ng-src="images/img_{{stateOfBeing}}.png" />
+            <img ng-src="images/img_{{stateOfBeing}}.png" />-->
         </div>
 
     </div>
-
+    <!-- {{expresion | $filter function: arg1 :arg2}} 
+        arg1 ->  currency sign
+        arg2 -> fraction number
+        using to change the value of the expresion  -->
 
     <!--ng-keyUp="dispalyNumeric(name);"-->
 
