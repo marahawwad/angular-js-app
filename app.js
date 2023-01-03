@@ -19,32 +19,33 @@
         // to create custom filer 1. defined the custom filter factory 
         // 2. register filter factory with module
         //3. inject it with nameFilter
-        // .filter('custom', CustomFilter)
+        //** */ .filter('custom', CustomFilter)
         // once we need too using it from html we don't need to inject it in controller injector
-        // .filter('truth', TruthFilter)
+        //** */ .filter('truth', TruthFilter)
         // here we used to right the busniess logic
         // it follow Singelton design  
         // inject it with the same name of declaration
         // service(name, function (treat as function constractor))
-        // .service('serviceName', SomeServiceFunction)
-        // allow us to produce any type of object function --> dynamiclly configurable at the time of using it
-        // include the service --> is just more limited factory
-        // injected funtion refers to whatever is returned in the factory function --> 1. can be object literal with prop that's a func creates smth
-        // 2. can be function creates smth 
-        //  .factory('factoryName', FactoryFunction)
-        //provider --> most verbose but flexibled  custom configure the factory once at the bootstrapping of the app
-        // provider.$get --> factory function --> directly attached to the provider instance --> create a new service
-        // inject it to the controller
-        .provider('ShoppingListService', ShoppingListServiceProvider)
-        //(optional) invoke in the module instance that guaranteed to run before any services or controller
-        // config the serviceProvider prop
-        .config(Config);
+        .service('ShoppingListService', ShoppingListService)
+        .service('WeightLossFilterService', WeightLossFilterService);
+    // allow us to produce any type of object function --> dynamiclly configurable at the time of using it
+    // include the service --> is just more limited factory
+    // injected funtion refers to whatever is returned in the factory function --> 1. can be object literal with prop that's a func creates smth
+    // 2. can be function creates smth 
+    //** */  .factory('factoryName', FactoryFunction)
+    //provider --> most verbose but flexibled  custom configure the factory once at the bootstrapping of the app
+    // provider.$get --> factory function --> directly attached to the provider instance --> create a new service
+    // inject it to the controller
+    //** */   .provider('ShoppingListService', ShoppingListServiceProvider)
+    //(optional) invoke in the module instance that guaranteed to run before any services or controller
+    // config the serviceProvider prop
+    //** */    .config(Config);
 
-    Config.$inject - ["ShoppingListServiceProvider"];
+    /*Config.$inject - ["ShoppingListServiceProvider"];
     function Config(ShoppingListServiceProvider) {
         // to set ant default config to be set before any running app
         ShoppingListServiceProvider.defaults.maxItem = 5;
-    };
+    };*/
 
 
 
@@ -68,20 +69,80 @@
          return totalStringValue;
      }
  });*/
-    function ShoppingListService(maxItem) {
+    // $q --> is the service of angular implementation of Promise API
+    ShoppingListService.$inject = ['$q', 'WeightLossFilterService']
+    function ShoppingListService($q, WeightLossFilterService/*, maxItem*/) {
+
         var service = this;
         var items = [];
 
+        // service.addItem = function (itemName, quantity) {
+        //     var promise = WeightLossFilterService.checkName(itemName);
+        //     // we can chain the promies methods
+        //     promise.then(function (result) {
+        //         var nextPtomise = WeightLossFilterService.checkQuantity(quantity);
+        //         nextPtomise.then(function (result) {
+        //             var item = {
+        //                 name: itemName,
+        //                 quantity: quantity
+        //             };
+        //             items.push(item);
+        //         }, function (errorResponse) {
+        //             console.log(errorResponse.message);
+        //         });
+        //     }, function (errorResponse) {
+        //         console.log(errorResponse.message);
+        //     });
+
+
+        // service.addItem = function (itemName, quantity) {
+        //     var promise = WeightLossFilterService.checkName(itemName);
+        //     // we can chain the promies methods
+        //     promise.then(function (response) {
+        //         return WeightLossFilterService.checkQuantity(quantity);
+        //     }).then(function (response) {
+        //         var item = {
+        //             name: itemName,
+        //             quantity: quantity
+        //         };
+        //         items.push(item);
+        //     })
+        //         .catch(function (errorResponse) {
+        //             console.log(errorResponse.message);
+
+        //      });
+
+
         service.addItem = function (itemName, quantity) {
-            if ((maxItem === undefined) || (maxItem !== undefined) && (items.length < maxItem)) {
-                var item = {
-                    name: itemName,
-                    quantity: quantity
-                };
-                items.push(item);
-            } else {
-                throw new Error("Max items (" + maxItem + ") reached");
-            }
+            var namePromise = WeightLossFilterService.checkName(itemName);
+            var quantityPromise = WeightLossFilterService.checkQuantity(quantity);
+
+            // we can chain the promise methods
+            //  $q.all([array of promises]) here we do the calling in pararall to improve the performance
+            // executed after every promises returned --> the time will be for the longest one
+            $q.all([namePromise, quantityPromise])
+                .then(function (response) {
+                    var item = {
+                        name: itemName,
+                        quantity: quantity
+                    };
+                    items.push(item);
+                })
+                .catch(function (errorResponse) {
+                    console.log(errorResponse.message);
+
+                });
+
+
+            /* if ((maxItem === undefined) || (maxItem !== undefined) && (items.length < maxItem)) {
+                 var item = {
+                     name: itemName,
+                     quantity: quantity
+                 };
+                 items.push(item);
+             } else {
+                 throw new Error("Max items (" + maxItem + ") reached");
+             }*/
         };
 
         service.removeItem = function (itemIndex) {
@@ -92,10 +153,59 @@
             return items;
         };
 
-        service.getMaxItem = function () {
-            return maxItem;
-        };
+        // service.getMaxItem = function () {
+        //     return maxItem;
+        // };
     };
+
+    WeightLossFilterService.$inject = ['$q', '$timeout']
+    function WeightLossFilterService($q, $timeout) {
+        var service = this;
+
+        service.checkName = function (itemName) {
+            // $q.defer() to create a Promise.
+            var deferred = $q.defer();
+            var result = {
+                message: ""
+            };
+
+            $timeout(function () {
+                if (itemName.toLowerCase().indexOf('cookie') === -1) {
+                    // promise successfully passing to the result
+                    deferred.resolve(result);
+                } else {
+                    result.message = "Stay away from cookies";
+                    // promise unsuccessfully passing to the result
+                    deferred.reject(result);
+                }
+            }, 3000);
+
+            // return the result of the promise
+            return deferred.promise;
+        };
+
+
+        service.checkQuantity = function (itemQuantity) {
+            // $q.defer() to create a Promise.
+            var deferred = $q.defer();
+            var result = {
+                message: ""
+            };
+
+            $timeout(function () {
+                if (itemQuantity < 6) {
+                    // promise successfully passing to the result
+                    deferred.resolve(result);
+                } else {
+                    result.message = "That's too much";
+                    // promise unsuccessfully passing to the result
+                    deferred.reject(result);
+                }
+            }, 1000);
+
+            return deferred.promise;
+        };
+    }
 
     function ShoppingListServiceProvider() {
         var provider = this;
@@ -119,7 +229,7 @@
         list.items = ShoppingListService.getItems();
         list.itemName = "";
         list.itemQuantity = "";
-        list.maxItem = ShoppingListService.getMaxItem();
+        //  list.maxItem = ShoppingListService.getMaxItem();
         list.addItem = function () {
 
             try {
