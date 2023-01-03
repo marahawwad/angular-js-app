@@ -26,7 +26,24 @@
         // it follow Singelton design  
         // inject it with the same name of declaration
         // service(name, function (treat as function constractor))
-        .service();
+        .service('serviceName', SomeServiceFunction)
+        // allow us to produce any type of object function --> dynamiclly configurable at the time of using it
+        // include the service --> is just more limited factory
+        // injected funtion refers to whatever is returned in the factory function --> 1. can be object literal with prop that's a func creates smth
+        // 2. can be function creates smth 
+        .factory('factoryName', FactoryFunction)
+        //provider --> most verbose but flexibled  custom configure the factory once at the bootstrapping of the app
+        // provider.$get --> factory function --> directly attached to the provider instance --> create a new service
+        // inject it to the controller
+        .provider('serviceName', ServiceProvider)
+        //(optional) invoke in the module instance that guaranteed to run before any services or controller
+        // config the serviceProvider prop
+        .config(config);
+
+    Config.$inject - ["ServiceProvider"];
+    function config(serviceName) {
+        // to set ant default config to be set before any running app
+    }
 
     ContFunction.$inject = ['$scope', '$filter', 'customFilter', '$timeout'];
 
