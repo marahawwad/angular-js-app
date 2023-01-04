@@ -3,4 +3,19 @@ body {
 }
 .error{
  color: red;
+ display: none;
+}
+
+#list1,#list2{
+    float: left;
+}
+#list2{
+    margin-left: 20px
+}
+
+.warning{
+    font-style: italic;
+}
+.title{
+    background-color: #383838;
 }
