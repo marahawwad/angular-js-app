@@ -4,7 +4,13 @@
     // best practice to use it
     'use strict';
 
-    // (name of the module , list of depencies)
+    // (name of the module (unique over the app) , list of depencies)
+    // to retruve the module instance previous created
+    // .config() fierd before .run() 
+    // after calling the inisializing moudel otherwise get error
+    // all dependinsies fierd first
+    // /**/ */ angular.module('app')
+
     angular.module('app', [])
 
         // (name of the controller , function (defined the functionallty of the controller) )
