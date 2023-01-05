@@ -1,17 +1,18 @@
-<h3>{{list.title}}</h3>
+<h3>{{$ctrl.title}}</h3>
 <ol>
-    <li ng-repeat="item in list.items">
+    <li ng-repeat="item in $ctrl.items">
         {{item.quantity}} boxes of {{item.name}}
         <!--this out the context of the list controller so we didn't see the change-->
         <!--list was declare in directive controller-->
-        <button ng-click="list.badRemove($index);">Bad Remove Item</button>
-        <button ng-click="list.onRemove({index: $index});">Remove Item</button>
+        <!-- <button ng-click="$ctrl.badRemove($index);">Bad Remove Item</button> -->
+        <!-- <button ng-click="$ctrl.onRemove({index: $index});">Remove Item</button> -->
+        <button ng-click="$ctrl.remove($index);">Remove Item</button>
 
         <!-- <button ng-click="list.removeItem($index);">Remove Item</button> -->
     </li>
 </ol>
 
-<!-- <div class="error" ng-if="list.cookieInList()"> WARNING! COOKIES DETECTED</div> -->
+<!-- <div class="error" ng-if="$ctrl.cookieInList()"> WARNING! COOKIES DETECTED</div> -->
 
-<!-- <div class="error">WARNING! COOKIES DETECTED</div> -->
-<div class="error" ng-transclude></div>
+<div class="error">WARNING! COOKIES DETECTED</div>
+<!-- <div class="error" ng-transclude></div> -->

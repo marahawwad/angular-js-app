@@ -19,3 +19,8 @@ body {
 .title{
     background-color: #383838;
 }
+
+.load-icon{
+    background: transparent url(./images/flicker-loading.gif) no-repeat scroll center center;
+
+}

@@ -1,0 +1,112 @@
+<html ng-app='app'>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <script src="jquery-3.1.0.min.js"></script> -->
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <!-- <style>
+        body {
+            font-size: 1.3em;
+        }
+    </style> -->
+    <link rel="stylesheet" href="styles.css">
+    <title>AngularJs App</title>
+</head>
+
+<body>
+    <h1>Shopping List App</h1>
+    <div ng-controller='AppController as list'>
+
+        <h3>Shopping List</h3>
+        <input type="text" ng-model="list.itemName" placeholder="Item Name">
+        <input type="text" ng-model="list.itemQuantity" placeholder="Item Quantity">
+        boxes
+        <button ng-click="list.addItem();">Add Item</button>
+
+        <span>{{list.lastRemoved}}</span>
+
+        <shopping-list items="list.items" title="{{list.title}}" on-remove="list.removeItem(index)">
+        </shopping-list>
+
+        <!-- when use the scope in directive we put the name on .js here as a tag -->
+        <!-- index just a key to the dierctive to be able to find and assign  value to it executed in the contex of controller not directive controller-->
+
+        <!-- <shopping-list id="list1" 
+        items="list.items" 
+        title="{{list.title}}" 
+        bad-remove="list.removeItem"
+            on-remove="list.removeItem(index)">
+            <span class="warning">WARNING! {{list.warning}}</span>
+        </shopping-list> -->
+
+
+
+        <!-- <shopping-list id="list2" items="list.items" title="{{list.title}}" on-remove="list.removeItem(index)">
+            <div>
+                <div class="title"> OH, THE HORROR!</div>
+                <div> {{list.warning}}</div>
+            </div>
+            <span class="warning">WARNING! {{list.warning}}</span>
+        </shopping-list> -->
+
+        <!-- <div ng-if="list.errorMessage" class="error">
+            Error: {{list.errorMessage}}
+        </div> -->
+        <!-- <div ng-show="list.errorMessage" class="error">
+            Error: {{list.errorMessage}}
+        </div> -->
+        <!-- <div ng-hide="list.items.length < list.maxItem" class="error">
+            Error: {{list.errorMessage}}
+        </div> -->
+
+        <!-- <div>
+            <button ng-click="upCounter()"> Increment Counter</button>
+        </div>
+
+        <div>
+
+            Reqular Counter: {{counter}}
+        </div> -->
+        <!-- Once Counter: {{onceCounter}} <br>
+                        <button ng-click="countOnce()"> Up Once Counter (once)</button>
+
+            <div>
+                    <button ng-click="showNumberOfWatchers()"> Log # of Watchers</button>
+
+            Your Name: <input type="text" ng-model="name" ng-blur="upper();">
+        </div>
+        Total Number value of person's name is: {{totalValue}}
+        <br>
+        Originl: {{sayMessage()}}
+        <br>
+        Replace : {{replaceMessage()}}
+        <br>
+        Truth: {{sayMessage() | truth : 'healthy': 'cookie'}}
+        <br>
+        Big Truth : {{sayMessage() | truth : 'healthy': 'cookie' | uppercase}}-->
+
+        <div>
+            <!-- ng-src -- means tell the intreprot not try to invoke the src of the image -->
+            <!--  <button ng-click="feedMe()">Feed Me</button>
+            Cost: {{foodCost | currency }}
+            <br>
+            <img ng-src="images/img_{{stateOfBeing}}.png" />-->
+        </div>
+
+    </div>
+    <!-- {{expresion | $filter function: arg1 :arg2}} 
+        arg1 ->  currency sign
+        arg2 -> fraction number
+        using to change the value of the expresion  -->
+
+    <!--ng-keyUp="dispalyNumeric(name);"-->
+
+    <!--<div ng-controller='AppController'>
+        {{sayHello()}}
+        <input type="text" ng-model="name" />
+        Inside the input is: {{name}}
+    </div>-->
+</body>
+
+</html>
