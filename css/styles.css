@@ -1,0 +1,27 @@
+body {
+    font-size: 1.3em;
+}
+.error{
+ color: red;
+ display: none;
+}
+
+#list1,#list2{
+    float: left;
+}
+#list2{
+    margin-left: 20px
+}
+
+.warning{
+    font-style: italic;
+}
+.title{
+    background-color: #383838;
+}
+
+.load-icon{
+    background: transparent url(./images/flicker-loading.gif) no-repeat scroll center center;
+width: 100px;
+height: 100px;
+}
