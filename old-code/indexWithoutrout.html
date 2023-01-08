@@ -1,0 +1,38 @@
+<html ng-app='app'>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <script src="jquery-3.1.0.min.js"></script> -->
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+    <script src="app.js"></script>
+    <!-- <style>
+        body {
+            font-size: 1.3em;
+        }
+    </style> -->
+    <link rel="stylesheet" href="css/styles.css">
+    <title>AngularJs App</title>
+</head>
+
+<body>
+    <h1>Shopping List App</h1>
+    <div ng-controller='AppController as list'>
+
+        <h3>Shopping List</h3>
+        <input type="text" ng-model="list.itemName" placeholder="Item Name">
+        <input type="text" ng-model="list.itemQuantity" placeholder="Item Quantity">
+        boxes
+        <button ng-click="list.addItem();">Add Item</button>
+
+        <span>{{list.lastRemoved}}</span>
+
+        <shopping-list items="list.items" title="{{list.title}}" on-remove="list.removeItem(index)">
+        </shopping-list>
+
+        <load-spinner></load-spinner>
+    </div>
+
+</body>
+
+</html>
